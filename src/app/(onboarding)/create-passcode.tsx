@@ -11,8 +11,8 @@ export default function CreatePasscodeScreen() {
 
   useEffect(() => {
     if (passcode.length === 6) {
-      // TODO: Save passcode
-      router.push("/confirm-passcode")
+      // Save passcode if needed
+      router.push("confirm-passcode")
     }
   }, [passcode.length])
 
@@ -32,9 +32,9 @@ export default function CreatePasscodeScreen() {
             Create passcode
           </Text>
           <Text className="mt-2 text-[13px] font-medium text-neutral-600">
-            You’ll be able to log in to SmartBank using the following passcode.
+            You'll be able to log in to SmartBank using the following passcode.
           </Text>
-          <View className="flex-1  pt-16">
+          <View className="flex-1 pt-16">
             <PinInput code={passcode} setCode={setPasscode} />
           </View>
         </View>

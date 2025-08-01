@@ -1,12 +1,30 @@
 {
   "expo": {
-    "scheme": "com.edrickleong.smartbank",
+    "scheme": "com.thinkode.smartbank",
     "userInterfaceStyle": "light",
     "ios": {
-      "bundleIdentifier": "com.edrickleong.smartbank"
+      "bundleIdentifier": "com.thinkode.smartbank",
+      "infoPlist": {
+        "NSContactsUsageDescription": "We need access to your contacts for better security."
+      }
+    },
+    "android": {
+      "package": "com.thinkode.smartbank",
+      "permissions": [
+        "READ_PHONE_STATE",
+        "READ_PHONE_NUMBERS"
+      ]
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "82e9f79d-50c2-4570-8b46-27f848ec1ad3"
+      }
+    }
   }
 }

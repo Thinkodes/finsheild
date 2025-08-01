@@ -10,13 +10,22 @@ export default function Layout() {
 
   useEffect(() => {
     const redirectIfUnauthenticated = async () => {
-      const { data, error } = await supabase.auth.getSession()
-      if (!error && data.session) {
-        setIsLoading(false)
-        return
-      }
+      try {
+        const { data, error } = await supabase.auth.getSession()
+        console.log("Auth session check:", data?.session ? "Authenticated" : "Unauthenticated")
+        
+        if (!error && data.session) {
+          setIsLoading(false)
+          return
+        }
 
-      router.replace("/welcome")
+        // User is not authenticated, redirect to welcome screen
+        console.log("No active session, redirecting to welcome")
+        router.replace("/welcome")
+      } catch (e) {
+        console.error("Error checking auth:", e)
+        router.replace("/welcome")
+      }
     }
     redirectIfUnauthenticated()
   }, [])

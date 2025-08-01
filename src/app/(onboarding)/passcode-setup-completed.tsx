@@ -37,7 +37,7 @@ export default function Page() {
               className={cn(
                 "mb-4 h-12 w-full items-center justify-center rounded-xl bg-[#E8F569]",
               )}
-              onPress={() => {}}
+              onPress={() => router.replace("/")}
             >
               <Text className={cn("text-[16px] font-bold text-[#134555]")}>
                 Continue

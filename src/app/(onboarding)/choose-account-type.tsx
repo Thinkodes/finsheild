@@ -57,7 +57,7 @@ function AccountCard({ image, title, description }: AccountCardProps) {
         shadowOffset: { width: 0, height: 24 },
         shadowOpacity: 0.15,
       }}
-      onPress={() => router.push("select-country")}
+      onPress={() => router.push("create-passcode")}
     >
       <Image className="w-14" resizeMode="contain" source={image} />
       <View className="flex-1 flex-col">

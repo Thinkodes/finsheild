@@ -12,7 +12,7 @@ export default function Page() {
   useEffect(() => {
     if (passcode.length === 6) {
       // TODO: Validate passcode
-      router.push("/passcode-setup-completed")
+      router.push("passcode-setup-completed")
     }
   }, [passcode.length])
 

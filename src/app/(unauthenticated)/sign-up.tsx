@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { makeRedirectUri } from "expo-auth-session"
+import * as Linking from "expo-linking"
 import { Link, router } from "expo-router"
 import { Controller, useForm } from "react-hook-form"
 import {
@@ -35,21 +36,40 @@ export default function Page() {
   })
 
   const signUp = handleSubmit(async ({ email }) => {
-    const redirectURL = makeRedirectUri({})
+    try {
+      // Sign up with password authentication (no email verification)
+      const { error, data } = await supabase.auth.signUp({
+        email,
+        password: "password123", // Using a default password for demo purposes
+        options: {
+          emailRedirectTo: Linking.createURL('/'),
+          data: {
+            email,
+          },
+        },
+      })
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: redirectURL,
-      },
-    })
+      if (error) {
+        Alert.alert("An error occurred", error.message, [{ text: "OK" }])
+        return
+      }
 
-    if (error) {
-      Alert.alert("An error occurred", error.message, [{ text: "OK" }])
-      return
+      // Immediately sign in after signup to create session
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password: "password123",
+      })
+      
+      if (signInError) {
+        Alert.alert("An error occurred", signInError.message, [{ text: "OK" }])
+        return
+      }
+
+      // Skip email confirmation and proceed directly to the app
+      router.replace("/(onboarding)")
+    } catch (e) {
+      Alert.alert("An unexpected error occurred", (e as Error).message, [{ text: "OK" }])
     }
-
-    router.push({ pathname: "/confirm-email", params: { email } })
   })
   return (
     <SafeAreaView style={{ flex: 1 }}>
